@@ -1,8 +1,10 @@
 import { StatusBar } from 'expo-status-bar';
 import { useEffect, useRef, useState } from 'react';
-import { StyleSheet, Text, View, Pressable } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { CountdownDisplay } from './Components/CountdownDisplay';
 import { TimerButton } from './Components/Timerbutton';
+
+import { Picker } from '@react-native-picker/picker';
 
 
 
