@@ -25,14 +25,12 @@ export const TimerButton: React.FC<Props> = ({timerRunning, stopTimer, startTime
 
 const styles = StyleSheet.create({
     container: {
-        borderWidth: 5,
+        borderRadius: 250 / 2,
+        borderWidth: 15,
         width: 250,
         height: 250,
-        borderRadius: 50,
-        justifyContent: "center",
         marginVertical: 50,
-        backgroundColor: "tomato",
-
+        justifyContent: "center",
     },
     icon: {
         alignSelf: "center",

@@ -44,10 +44,11 @@ export default function App() {
 
  
   return (
-    <View style={styles.container}>
+    <View style={mode === "Focus Time" ? styles.focusMode : styles.relaxMode }>
       <Text style={styles.title}>POMODORO TIMER</Text>
       <StatusBar style="auto" />
       <TimerButton timerRunning={timerRunning} startTimer={startTimer} stopTimer={stopTimer} />
+      <Text style={styles.modeStyle}>{mode}:</Text>
       <CountdownDisplay timerDate={new Date(timerCount)} />
     </View>
   );
@@ -60,8 +61,24 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  focusMode:{
+    flex: 1,
+    backgroundColor: 'tomato',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  relaxMode:{
+    flex: 1,
+    backgroundColor: '#167D7F',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   title :{
     fontSize: 37,
+    fontWeight: "bold",
+  },
+  modeStyle: {
+    fontSize: 27,
     fontWeight: "bold",
   }
 });
