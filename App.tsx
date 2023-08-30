@@ -1,18 +1,16 @@
 import { StatusBar } from 'expo-status-bar';
 import { useEffect, useRef, useState } from 'react';
-import { Button, StyleSheet, Text, View } from 'react-native';
+import { Button, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { CountdownDisplay } from './Components/CountdownDisplay';
 import { TimerButton } from './Components/Timerbutton';
 
-import { Picker } from '@react-native-picker/picker';
-
-
-
-const focusTimeMinutes = 0.2 * 60 * 1000;
-const breakTimeMinutes = 0.1 * 60 * 1000; 
+// Timers Settings: //
+const focusTimeMinutes = 25 * 60 * 1000;
+const breakTimeMinutes = 5 * 60 * 1000;
 
 export default function App() {
 
+  // States: //
   const [timerCount, setTimerCount] = useState<number>(focusTimeMinutes);
   const timerInterval = useRef<NodeJS.Timeout | null>(null);
   const [mode, setMode] = useState<"Focus Time" | "Break Time">("Focus Time");
@@ -21,7 +19,7 @@ export default function App() {
   function startTimer() {
     setTimerRunning(true);
     const id = setInterval(() => setTimerCount(prev => prev - 1000), 1000);
-    timerInterval.current = id; // Store the interval ID
+    timerInterval.current = id;
   }
 
   function stopTimer() {
@@ -30,6 +28,18 @@ export default function App() {
     }
     setTimerRunning(false);
   }
+
+  const handleModeSwitch = () => {
+    stopTimer(); 
+
+    if (mode === "Focus Time") {
+      setMode("Break Time");
+      setTimerCount(breakTimeMinutes);
+    } else {
+      setMode("Focus Time");
+      setTimerCount(focusTimeMinutes);
+    }
+  };
 
   useEffect(() => {
     if (timerCount === 0) {
@@ -44,7 +54,7 @@ export default function App() {
     }
   }, [timerCount]);
 
- 
+  // Rendering: //
   return (
     <View style={mode === "Focus Time" ? styles.focusMode : styles.relaxMode }>
       <Text style={styles.title}>POMODORO TIMER</Text>
@@ -52,11 +62,14 @@ export default function App() {
       <TimerButton timerRunning={timerRunning} startTimer={startTimer} stopTimer={stopTimer} />
       <Text style={styles.modeStyle}>{mode}:</Text>
       <CountdownDisplay timerDate={new Date(timerCount)} />
-      <Button title='Set Timer'></Button>
+      <TouchableOpacity onPress={handleModeSwitch} style={mode === "Focus Time" ? styles.switchBtnFocus : styles.switchBtnRelax }>
+        <Text>Switch Mode</Text>
+      </TouchableOpacity>
     </View>
   );
 }
 
+// Styles: //
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -83,5 +96,24 @@ const styles = StyleSheet.create({
   modeStyle: {
     fontSize: 27,
     fontWeight: "bold",
-  }
+    marginBottom: 20,
+  },
+  switchBtnRelax: {
+    backgroundColor: '#167D7F',
+    padding: 10,
+    borderRadius: 20,
+    marginTop: 20,
+    alignItems: 'center',
+    borderWidth: 5,
+    borderColor: "black",
+  },
+  switchBtnFocus: {
+    backgroundColor: 'tomato',
+    padding: 10,
+    borderRadius: 20,
+    marginTop: 20,
+    alignItems: 'center',
+    borderWidth: 5,
+    borderColor: "black",
+  },
 });
