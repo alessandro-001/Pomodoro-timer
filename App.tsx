@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import { useEffect, useRef, useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Button, StyleSheet, Text, View } from 'react-native';
 import { CountdownDisplay } from './Components/CountdownDisplay';
 import { TimerButton } from './Components/Timerbutton';
 
@@ -52,6 +52,7 @@ export default function App() {
       <TimerButton timerRunning={timerRunning} startTimer={startTimer} stopTimer={stopTimer} />
       <Text style={styles.modeStyle}>{mode}:</Text>
       <CountdownDisplay timerDate={new Date(timerCount)} />
+      <Button title='Set Timer'></Button>
     </View>
   );
 }
