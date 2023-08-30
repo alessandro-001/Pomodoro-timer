@@ -1,12 +1,15 @@
 import { StatusBar } from 'expo-status-bar';
 import { useEffect, useRef, useState } from 'react';
-import { Button, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { CountdownDisplay } from './Components/CountdownDisplay';
 import { TimerButton } from './Components/Timerbutton';
+import { Audio } from 'react-native';
+
 
 // Timers Settings: //
-const focusTimeMinutes = 25 * 60 * 1000;
-const breakTimeMinutes = 5 * 60 * 1000;
+const focusTimeMinutes = 25 * 60 * 1000; // Modify focus time duration (in milliseconds)
+const breakTimeMinutes = 5 * 60 * 1000;  // Adjust break time duration (in milliseconds)
+ 
 
 export default function App() {
 
@@ -56,15 +59,17 @@ export default function App() {
 
   // Rendering: //
   return (
-    <View style={mode === "Focus Time" ? styles.focusMode : styles.relaxMode }>
-      <Text style={styles.title}>POMODORO TIMER</Text>
+    <View style={mode === "Focus Time" ? styles.focusMode : styles.relaxMode } >
+      <Text style={styles.title} >POMODORO TIMER</Text>
       <StatusBar style="auto" />
       <TimerButton timerRunning={timerRunning} startTimer={startTimer} stopTimer={stopTimer} />
-      <Text style={styles.modeStyle}>{mode}:</Text>
+      <Text style={styles.modeStyle} >{mode}:</Text>
       <CountdownDisplay timerDate={new Date(timerCount)} />
-      <TouchableOpacity onPress={handleModeSwitch} style={mode === "Focus Time" ? styles.switchBtnFocus : styles.switchBtnRelax }>
-        <Text>Switch Mode</Text>
-      </TouchableOpacity>
+      <View style={styles.switchButtonContainer}>
+        <TouchableOpacity onPress={handleModeSwitch} style={mode === "Focus Time" ? styles.switchBtnFocus : styles.switchBtnRelax} >
+          <Text>Switch Mode</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
@@ -97,6 +102,9 @@ const styles = StyleSheet.create({
     fontSize: 27,
     fontWeight: "bold",
     marginBottom: 20,
+  },
+  switchButtonContainer: {
+    marginBottom: -30,
   },
   switchBtnRelax: {
     backgroundColor: '#167D7F',

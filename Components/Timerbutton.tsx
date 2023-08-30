@@ -1,12 +1,11 @@
 import React from "react";
-import {Button, Pressable, StyleSheet, View} from "react-native";
+import {Pressable, StyleSheet, View} from "react-native";
 import {FontAwesome} from "@expo/vector-icons";
 
 type Props = {
     timerRunning: boolean;
     stopTimer: () => void;
     startTimer: () => void;
-
 }
 
 export const TimerButton: React.FC<Props> = ({timerRunning, stopTimer, startTimer}) => {
@@ -17,7 +16,7 @@ export const TimerButton: React.FC<Props> = ({timerRunning, stopTimer, startTime
                     style={styles.icon}
                     name={timerRunning ? "pause" : "play"} 
                     size={100} 
-                     />
+                />
             </View>
         </Pressable>   
     )
