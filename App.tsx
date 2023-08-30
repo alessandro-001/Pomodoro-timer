@@ -3,7 +3,8 @@ import { useEffect, useRef, useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { CountdownDisplay } from './Components/CountdownDisplay';
 import { TimerButton } from './Components/Timerbutton';
-import { Audio } from 'react-native';
+import { Audio } from 'expo-av';
+import chime from './assets/chime.mp3';
 
 
 // Timers Settings: //
@@ -12,7 +13,6 @@ const breakTimeMinutes = 5 * 60 * 1000;  // Adjust break time duration (in milli
  
 
 export default function App() {
-
   // States: //
   const [timerCount, setTimerCount] = useState<number>(focusTimeMinutes);
   const timerInterval = useRef<NodeJS.Timeout | null>(null);
@@ -33,8 +33,7 @@ export default function App() {
   }
 
   const handleModeSwitch = () => {
-    stopTimer(); 
-
+    stopTimer();
     if (mode === "Focus Time") {
       setMode("Break Time");
       setTimerCount(breakTimeMinutes);
@@ -43,19 +42,32 @@ export default function App() {
       setTimerCount(focusTimeMinutes);
     }
   };
+  
+  const playSound = async () => {
+    const sound = new Audio.Sound();
+    try {
+      await sound.loadAsync(chime);
+      await sound.playAsync();
+    } catch (error) {
+      console.error("Error playing sound: ", error);
+    }
+  };
 
   useEffect(() => {
     if (timerCount === 0) {
       if (mode === "Focus Time") {
         setMode("Break Time");
         setTimerCount(breakTimeMinutes);
+        playSound(); 
       } else { 
         setMode("Focus Time");
         setTimerCount(focusTimeMinutes);
+        playSound();
       }
       stopTimer();
     }
   }, [timerCount]);
+
 
   // Rendering: //
   return (
