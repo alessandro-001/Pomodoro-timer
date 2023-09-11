@@ -18,8 +18,8 @@ Welcome to the Pomodoro Timer mobile app. This application is designed to help y
 
 ## Screenshots
 <div style="justify-content: center;">
-  <img src="./assets/pomodoro1.jpg" width="200" alt="Screenshot 1">
-  <img src="./assets/pomodoro2.jpg" width="200" alt="Screenshot 2">
+  <img src="./assets/pomodoro1.png" width="200" alt="Screenshot 1">
+  <img src="./assets/pomodoro2.png" width="200" alt="Screenshot 2">
 </div>
 
 ## Prerequisites
